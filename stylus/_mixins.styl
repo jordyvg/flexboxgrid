@@ -1,0 +1,80 @@
+autoWidth()
+  flex-grow 1
+  flex-basis 0
+  max-width 100%
+
+percentWidth(property, columns, count)
+  {property} ((100% / columns) * count)
+
+percentOffset(property, columns, count)
+  single-column-width = ((100% / columns) * 1)
+  {property} single-column-width * count
+
+mediaQueries = {}
+genQueries(key, queries)
+  if queries[key] == default-query
+    {block}
+  else
+    queryHelper(querieKey)
+      querieKey = '%s' % querieKey
+      unless mediaQueries[querieKey]
+        mediaQueries[querieKey] = ()
+      push(mediaQueries[querieKey], block)
+
+    +queryHelper(queries[key])
+      {selector()}
+        {block}
+
+columns(columns = column-counter)
+  for name, size in queries
+    +genQueries(name, queries)
+      for i in 0..columns
+        if i == 0
+          {column-selector + block-delimiter + name}
+            autoWidth()
+        else
+          {column-selector + block-delimiter + name + modifier-delimiter + i}
+            for prop in column-properties
+              percentWidth(prop, columns, i)
+
+offsets(columns = column-counter)
+  for name, size in queries
+    +genQueries(name, queries)
+      for i in 0..(columns - 1)
+        {offset-selector + block-delimiter + name + modifier-delimiter + i}
+          for prop in offset-properties
+            percentOffset(prop, columns, i)
+
+breakpoints(selector)
+  for name, size in queries
+    +genQueries(name, queries)
+      {selector + modifier-delimiter + name}
+        {block}
+
+applyMediaQueries()
+  for media, blocks in mediaQueries
+    media = 'screen and (min-width %s)' % unquote(media)
+    @media media
+      for block in blocks
+        {block}
+
+container-fluid()
+  box-sizing border-box
+  margin-right auto
+  margin-left @margin-right
+  padding-right outer-margin
+  padding-left @padding-right
+
+row()
+  box-sizing border-box
+  display flex
+  flex-direction row
+  flex-wrap wrap
+  margin-right gutter-compensation
+  margin-left @margin-right
+
+column()
+  box-sizing border-box
+  flex-grow 0
+  padding-right half-gutter-width
+  padding-left @padding-right

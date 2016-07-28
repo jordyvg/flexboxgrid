@@ -1,0 +1,36 @@
+@import '_variables'
+@import '_mixins'
+
+.container-fluid
+  container-fluid()
+
+.row
+  row()
+
+{s('[class*=%s]', column-wildcard)}
+  column()
+
+// Generate flexbox grid
+columns()
+
+offsets()
+
+for selector in justify-content
+  +breakpoints(selector)
+    justify-content justify-content[selector]
+
+for selector in align-items
+  +breakpoints(selector)
+    align-items align-items[selector]
+
++breakpoints('.first')
+  order -1
+
++breakpoints('.last')
+  order 1
+
++breakpoints('.reverse')
+  flex-direction row-reverse
+
+// Put above in a single media query
+applyMediaQueries()

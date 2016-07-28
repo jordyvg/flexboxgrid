@@ -1,0 +1,52 @@
+column-counter ?= 12
+column-selector ?= '.col'
+offset-selector ?= '.offset'
+
+gutter-width ?= 1rem
+outer-margin ?= 2rem
+gutter-compensation ?= ((gutter-width / 2) * -1)
+half-gutter-width ?= (gutter-width / 2)
+
+width-xs ?= 30
+width-sm ?= 48
+width-md ?= 62
+width-lg ?= 75
+
+viewport-xs ?= width-xs * 1em
+viewport-sm ?= width-sm * 1em
+viewport-md ?= width-md * 1em
+viewport-lg ?= width-lg * 1em
+
+container-sm ?= width-sm * 1rem + gutter-width
+container-md ?= width-md * 1rem + gutter-width
+container-lg ?= width-lg * 1rem + gutter-width
+
+block-delimiter ?= '-'
+element-delimiter ?= '-'
+modifier-delimiter ?= '-'
+
+default-query ?= viewport-xs
+queries ?= {
+  xs: viewport-xs
+  sm: viewport-sm
+  md: viewport-md
+  lg: viewport-lg
+}
+
+column-properties ?= 'flex-basis', 'max-width'
+offset-properties ?= 'margin-left'
+column-wildcard ?= replace('\.', '', column-selector + block-delimiter)
+
+justify-content ?= {
+  '.start': 'flex-start'
+  '.center': 'center'
+  '.end': 'flex-end'
+  '.around': 'space-around'
+  '.between': 'space-between'
+}
+
+align-items ?= {
+  '.top': 'flex-start'
+  '.middle': 'center'
+  '.bottom': 'flex-end'
+}
