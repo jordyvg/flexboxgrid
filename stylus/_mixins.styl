@@ -25,25 +25,32 @@ genQueries(key, queries)
       {selector()}
         {block}
 
-columns(columns = column-counter)
+containers()
+  for name in queries
+    if lookup('container-'+name)
+      +genQueries(name, queries)
+        .container
+          width lookup('container-'+name)
+
+columns()
   for name, size in queries
     +genQueries(name, queries)
-      for i in 0..columns
+      for i in 0..column-counter
         if i == 0
           {column-selector + block-delimiter + name}
             autoWidth()
         else
           {column-selector + block-delimiter + name + modifier-delimiter + i}
             for prop in column-properties
-              percentWidth(prop, columns, i)
+              percentWidth(prop, column-counter, i)
 
-offsets(columns = column-counter)
+offsets()
   for name, size in queries
     +genQueries(name, queries)
-      for i in 0..(columns - 1)
+      for i in 0..(column-counter - 1)
         {offset-selector + block-delimiter + name + modifier-delimiter + i}
           for prop in offset-properties
-            percentOffset(prop, columns, i)
+            percentOffset(prop, column-counter, i)
 
 breakpoints(selector)
   for name, size in queries

@@ -17,9 +17,9 @@ viewport-sm ?= width-sm * 1em
 viewport-md ?= width-md * 1em
 viewport-lg ?= width-lg * 1em
 
-container-sm ?= width-sm * 1rem + gutter-width
-container-md ?= width-md * 1rem + gutter-width
-container-lg ?= width-lg * 1rem + gutter-width
+container-sm ?= width-sm * 1rem - (gutter-width * 2)
+container-md ?= width-md * 1rem - (gutter-width * 2)
+container-lg ?= width-lg * 1rem - (gutter-width * 2)
 
 block-delimiter ?= '-'
 element-delimiter ?= '-'
@@ -49,4 +49,5 @@ align-items ?= {
   '.top': 'flex-start'
   '.middle': 'center'
   '.bottom': 'flex-end'
+  '.stretch': 'stretch'
 }
